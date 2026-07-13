@@ -26,22 +26,22 @@ const App = () => {
       if (confirmUpdate) {
         const changedPerson = { ...existingPerson, number: newNumber }
         
-        personService
-          .update(existingPerson.id, changedPerson)
-          .then(returnedPerson => {
-            setPersons(persons.map(p => p.id !== existingPerson.id ? p : returnedPerson))
-            setNewName('')
-            setNewNumber('')
-            setMessageType('success')
-            setInfoMessage(`Updated ${returnedPerson.name}'s number`)
-            setTimeout(() => setInfoMessage(null), 5000)
-          })
-          .catch(error => {
-            setMessageType('error')
-            setInfoMessage(`Information of ${existingPerson.name} has already been removed from server`)
-            setPersons(persons.filter(p => p.id !== existingPerson.id))
-            setTimeout(() => setInfoMessage(null), 5000)
-          })
+        // Dentro de addPerson cuando llamas al servicio POST:
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        setMessageType('success')
+        setInfoMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => setInfoMessage(null), 5000)
+      })
+      .catch(error => {
+        setMessageType('error')
+        setInfoMessage(error.response.data.error)
+        setTimeout(() => setInfoMessage(null), 5000)
+      })
       }
       return
     }
@@ -52,7 +52,6 @@ const App = () => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
-      // Ejercicio 2.16: Notificación de éxito al crear
       setMessageType('success')
       setInfoMessage(`Added ${returnedPerson.name}`)
       setTimeout(() => setInfoMessage(null), 5000)
