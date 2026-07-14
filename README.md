@@ -7,7 +7,7 @@ En este repositorio, se encuentran mis respuestas a los ejercicios del curso [Fu
 ## Desarrollador 👨‍💻:
 
 - **Desarrollador:** Rodrigo Gomez 👍
-- **GitHub:** [DiriARG](https://github.com/godridrigo233)
+- **GitHub:** [Godri](https://github.com/godridrigo233)
 
 ## Contenidos del curso 📚:
 
