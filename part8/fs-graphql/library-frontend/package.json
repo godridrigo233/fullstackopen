@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.0",
+    "@apollo/server": "^5.5.1",
     "graphql": "^16.14.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-select": "^5.8.0"
+    "react-select": "^5.8.0",
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
