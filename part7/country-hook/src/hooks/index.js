@@ -1,28 +1,37 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+export const useField = (type) => {
+  const [value, setValue] = useState('');
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return {
+    type,
+    value,
+    onChange
+  }
+};
 
 export const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
+  const [country, setCountry] = useState(null);
 
   useEffect(() => {
-    // 1. Si el input está vacío o es nulo, no hacemos petición a la API
-    if (!name || name === '') {
-      setCountry(null)
-      return
+    if (name !== '') {
+      getCountry();
     }
+  }, [name])
 
-    // 2. Hacemos la petición a la API de Helsinki con el nombre del país
-    axios.get(`https://studies.cs.helsinki.fi/restcountries/api/name/${name}`)
-      .then(response => {
-        // País encontrado: guardamos los datos y encendemos la bandera 'found'
-        setCountry({ found: true, data: response.data })
-      })
-      .catch(() => {
-        // Error 404 (no existe el país): apagamos la bandera 'found'
-        setCountry({ found: false })
-      })
-      
-  }, [name]) // 🔥 CRÍTICO: El efecto SOLO se ejecuta si la variable 'name' cambia
+  const getCountry = async () => {
+    try {
+      const response = await axios.get(`https://studies.cs.helsinki.fi/restcountries/api/name/${name}`);
+      setCountry(response);
+    } catch (error) {
+      setCountry(null)
+    }
+  };
 
   return country
-}
+};
