@@ -1,0 +1,9 @@
+### 1. Crear un nuevo usuario
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "rodrigo_dev",
+  "name": "Rodrigo",
+  "password": "supersecretpassword"
+}

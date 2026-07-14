@@ -9,7 +9,8 @@ const middleware = require('./utils/middleware')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-
+const dns = require('dns')
+dns.setServers(['8.8.8.8', '8.8.4.4'])
 logger.info('connecting to', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI)
