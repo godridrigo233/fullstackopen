@@ -5,6 +5,7 @@ const Book = require('./models/Book')
 const User = require('./models/User')
 const { PubSub } = require('graphql-subscriptions')
 const pubsub = new PubSub()
+
 const resolvers = {
   Query: {
     bookCount: async () => Book.collection.countDocuments(),
@@ -27,16 +28,32 @@ const resolvers = {
       return Book.find(query).populate('author')
     },
     
-    allAuthors: async () => Author.find({}),
+    allAuthors: async () => {
+      // 🚀 Solución al Problema N+1 usando $lookup de MongoDB
+      const authors = await Author.aggregate([
+        {
+          $lookup: {
+            from: 'books',           // Nombre de la colección en la base de datos
+            localField: '_id',       // ID del autor
+            foreignField: 'author',  // El campo en el libro que hace referencia al autor
+            as: 'booksWritten'       // Guardar todos los libros encontrados en un arreglo temporal
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            born: 1,
+            // Proyectamos (creamos) la variable bookCount contando el tamaño del arreglo
+            bookCount: { $size: '$booksWritten' },
+            id: '$_id' // Aseguramos devolver el id para GraphQL
+          }
+        }
+      ])
+      return authors
+    },
     
+    // 🔥 CORRECCIÓN: 'me' ahora está correctamente DENTRO de Query
     me: (root, args, context) => context.currentUser
-  },
-
-  Author: {
-    // Calculamos el número de libros escritos por cada autor
-    bookCount: async (root) => {
-      return Book.countDocuments({ author: root._id })
-    }
   },
 
   Mutation: {
@@ -66,7 +83,7 @@ const resolvers = {
       const populatedBook = await book.populate('author')
       pubsub.publish('BOOK_ADDED', { bookAdded: populatedBook })
 
-      return book.populate('author')
+      return populatedBook
     },
 
     editAuthor: async (root, args, context) => {
@@ -129,6 +146,7 @@ const resolvers = {
       return true
     },
   },
+  
   Subscription: {
     bookAdded: {
       subscribe: () => pubsub.asyncIterator('BOOK_ADDED')
