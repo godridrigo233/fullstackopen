@@ -7,7 +7,7 @@ const cors = require('cors')
 const http = require('http')
 
 const { WebSocketServer } = require('ws')
-const { useServer } = require('graphql-ws/lib/use/ws')
+const { useServer } = require('graphql-ws/use/ws')
 
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
