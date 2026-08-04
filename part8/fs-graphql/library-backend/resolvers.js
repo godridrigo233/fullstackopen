@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 const Author = require('./models/Author')
 const Book = require('./models/Book')
 const User = require('./models/User')
-
+const { PubSub } = require('graphql-subscriptions')
+const pubsub = new PubSub()
 const resolvers = {
   Query: {
     bookCount: async () => Book.collection.countDocuments(),
@@ -60,13 +61,10 @@ const resolvers = {
       }
 
       const book = new Book({ ...args, author: author._id })
-      try {
-        await book.save()
-      } catch (error) {
-        throw new GraphQLError('Falló al guardar el libro', {
-          extensions: { code: 'BAD_USER_INPUT', invalidArgs: args.title, error }
-        })
-      }
+      await book.save()
+      
+      const populatedBook = await book.populate('author')
+      pubsub.publish('BOOK_ADDED', { bookAdded: populatedBook })
 
       return book.populate('author')
     },
@@ -129,6 +127,11 @@ const resolvers = {
       await Book.deleteMany({})
       await User.deleteMany({})
       return true
+    },
+  },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator('BOOK_ADDED')
     }
   }
 }
