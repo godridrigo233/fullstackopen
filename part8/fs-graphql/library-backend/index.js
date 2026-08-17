@@ -17,8 +17,13 @@ const User = require('./models/User')
 const typeDefs = require('./schema')
 const resolvers = require('./resolvers')
 
-mongoose.connect(process.env.MONGODB_URI).then(() => console.log('Conectado a MongoDB'))
+const MONGODB_URI = process.env.NODE_ENV === 'test' 
+  ? process.env.TEST_MONGODB_URI 
+  : process.env.MONGODB_URI
 
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch((error) => console.log('Error conectando a MongoDB:', error.message))
 const start = async () => {
   const app = express()
   const httpServer = http.createServer(app)
@@ -51,6 +56,13 @@ const start = async () => {
 
   await server.start()
 
+  // 1. CORS primero
+  app.use(cors())
+  
+  // 2. express.json() SEGUNDO (¡Esto es lo que evita el error req.body!)
+  app.use(express.json())
+  
+  // 3. Apollo y su contexto AL FINAL
   app.use(
     '/',
     cors(),
@@ -67,9 +79,9 @@ const start = async () => {
     })
   )
 
-  const PORT = 4000
+  const PORT = process.env.PORT || 4000
   httpServer.listen(PORT, () =>
-    console.log(`🚀 Servidor HTTP y WebSocket listos en http://localhost:${PORT}`)
+    console.log(`🚀 Servidor HTTP y WebSocket listos en el puerto ${PORT}`)
   )
 }
 
