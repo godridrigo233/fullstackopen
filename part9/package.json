@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "type": "module",
+    "tsc": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
