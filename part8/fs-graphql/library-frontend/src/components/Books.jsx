@@ -1,84 +1,51 @@
 import { useState } from 'react'
-import { useMutation } from '@apollo/client'
-import { CREATE_BOOK, ALL_BOOKS, ALL_AUTHORS } from '../queries'
+import { useQuery } from '@apollo/client'
+import { ALL_BOOKS } from '../queries'
 
-const NewBook = (props) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [published, setPublished] = useState('')
-  const [genre, setGenre] = useState('')
-  const [genres, setGenres] = useState([])
-  const [createBook] = useMutation(CREATE_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+const Books = (props) => {
+  const [selectedGenre, setSelectedGenre] = useState(null)
+
+  const result = useQuery(ALL_BOOKS, {
+    variables: { genre: selectedGenre },
   })
 
   if (!props.show) {
     return null
   }
 
-  const submit = async (event) => {
-    event.preventDefault()
-
-    createBook({
-      variables: {
-        title,
-        author,
-        published: parseInt(published, 10),
-        genres,
-      },
-    })
-
-    setTitle('')
-    setAuthor('')
-    setPublished('')
-    setGenres([])
-    setGenre('')
+  if (result.loading) {
+    return <div>loading books...</div>
   }
 
-  const addGenre = () => {
-    setGenres(genres.concat(genre))
-    setGenre('')
-  }
+  const books = result.data?.allBooks || []
 
   return (
     <div>
-      <form onSubmit={submit}>
-        <div>
-          title
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          author
-          <input
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-        </div>
-        <div>
-          published
-          <input
-            type="number"
-            value={published}
-            onChange={(e) => setPublished(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-          />
-          <button onClick={addGenre} type="button">
-            add genre
-          </button>
-        </div>
-        <div>genres: {genres.join(' ')}</div>
-        <button type="submit">create book</button>
-      </form>
+      <h2>books</h2>
+      {selectedGenre && <p>in genre <strong>{selectedGenre}</strong></p>}
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>author</th>
+            <th>published</th>
+          </tr>
+          {books.map((book) => (
+            <tr key={book.id || book.title}>
+              <td>{book.title}</td>
+              <td>{book.author.name}</td>
+              <td>{book.published}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <button onClick={() => setSelectedGenre('refactoring')}>refactoring</button>
+        <button onClick={() => setSelectedGenre('classic')}>classic</button>
+        <button onClick={() => setSelectedGenre(null)}>all genres</button>
+      </div>
     </div>
   )
 }
 
-export default NewBook
+export default Books

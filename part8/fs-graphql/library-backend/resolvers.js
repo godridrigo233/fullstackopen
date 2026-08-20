@@ -60,7 +60,7 @@ const resolvers = {
     addBook: async (root, args, context) => {
       const currentUser = context.currentUser
       if (!currentUser) {
-        throw new GraphQLError('No autenticado', {
+        throw new GraphQLError('not authenticated', {
           extensions: { code: 'BAD_USER_INPUT' }
         })
       }
@@ -89,7 +89,7 @@ const resolvers = {
     editAuthor: async (root, args, context) => {
       const currentUser = context.currentUser
       if (!currentUser) {
-        throw new GraphQLError('No autenticado', {
+        throw new GraphQLError('not authenticated', {
           extensions: { code: 'BAD_USER_INPUT' }
         })
       }

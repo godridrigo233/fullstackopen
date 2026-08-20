@@ -5,10 +5,11 @@ import { LOGIN } from '../queries'
 const LoginForm = ({ show, setToken, setPage }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const [login, result] = useMutation(LOGIN, {
     onError: (error) => {
-      console.error(error.graphQLErrors[0]?.message || 'Error de login')
+      setErrorMessage('login failed')
     }
   })
 
@@ -25,17 +26,19 @@ const LoginForm = ({ show, setToken, setPage }) => {
 
   const submit = (event) => {
     event.preventDefault()
+    setErrorMessage(null)
     login({ variables: { username, password } })
     setUsername('')
-    password('')
+    setPassword('')
   }
 
   return (
     <div>
       <h2>Login</h2>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <form onSubmit={submit}>
-        <div>username <input value={username} onChange={({ target }) => setUsername(target.value)} /></div>
-        <div>password <input type="password" value={password} onChange={({ target }) => setPassword(target.value)} /></div>
+        <div>username <input aria-label="username" value={username} onChange={({ target }) => setUsername(target.value)} /></div>
+        <div>password <input aria-label="password" type="password" value={password} onChange={({ target }) => setPassword(target.value)} /></div>
         <button type="submit">login</button>
       </form>
     </div>

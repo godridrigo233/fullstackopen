@@ -6,11 +6,11 @@ const mongoose = require('../library-backend/node_modules/mongoose')
 
 const typeDefs = require('../library-backend/schema')
 const resolvers = require('../library-backend/resolvers')
-const Author = require('../library-backend/models/author')
-const Book = require('../library-backend/models/book')
-const User = require('../library-backend/models/user')
+const Author = require('../library-backend/models/Author')
+const Book = require('../library-backend/models/Book')
+const User = require('../library-backend/models/User')
 
-process.env.JWT_SECRET = 'test-secret-key'
+process.env.SECRET = 'test-secret-key'
 
 const initialAuthors = [
   { name: 'Robert Martin', born: 1952 },

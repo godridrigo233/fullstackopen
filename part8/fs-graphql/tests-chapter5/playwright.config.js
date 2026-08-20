@@ -18,4 +18,19 @@ module.exports = defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  webServer: [
+    {
+      command: 'node setup/start-test-backend.js',
+      url: 'http://127.0.0.1:4000',
+      timeout: 120000,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: 'npm run dev',
+      cwd: '../library-frontend',
+      url: 'http://127.0.0.1:5173',
+      timeout: 60000,
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 })
