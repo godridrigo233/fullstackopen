@@ -1,0 +1,61 @@
+name: Health app E2E Tests
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version: '24'
+    
+    - name: Install healthapp dependencies
+      working-directory: ./part9/fs-typescript/healthapp
+      run: npm install
+    
+    - name: Lint healthapp
+      working-directory: ./part9/fs-typescript/healthapp
+      run: npm run lint
+    
+    - name: Start healthapp server
+      working-directory: ./part9/fs-typescript/healthapp
+      run: |
+        npm start &
+        echo $! > server.pid
+        sleep 3
+    
+    - name: Install test dependencies
+      working-directory: ./part9/fs-typescript/healthapp-tests
+      run: npm install
+    
+    - name: Install Playwright browsers
+      working-directory: ./part9/fs-typescript/healthapp-tests
+      run: npx playwright install --with-deps chromium
+    
+    - name: Run e2e tests
+      working-directory: ./part9/fs-typescript/healthapp-tests
+      run: npm test
+    
+    - name: Upload test report
+      uses: actions/upload-artifact@v5
+      if: always()
+      with:
+        name: playwright-report
+        path: part9/fs-typescript/healthapp-tests/playwright-report/
+        retention-days: 30
+    
+    - name: Stop healthapp server
+      if: always()
+      working-directory: ./part9/fs-typescript/healthapp
+      run: |
+        if [ -f server.pid ]; then
+          kill $(cat server.pid) || true
+        fi

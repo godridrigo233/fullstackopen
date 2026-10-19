@@ -1,0 +1,44 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #202124;
+  background: #f4f7f8;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 0.5rem;
+}
+
+form,
+article {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ccd4d8;
+  border-radius: 0.4rem;
+}
+
+fieldset {
+  display: flex;
+  gap: 1rem;
+  border: 0;
+  padding: 0;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+fieldset label {
+  display: flex;
+  align-items: center;
+}
