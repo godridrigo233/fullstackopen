@@ -98,6 +98,14 @@ En esta parte, aprenderemos cómo compilar Android nativo y aplicaciones móvile
 
 <img src="./imagenes/parte-10.png" alt="Imagen parte 10" width="250">
 
+La aplicación de React Native está en [`part10/`](./part10/README.md). Ya está
+publicada con EAS Update en Expo Go. Escanea el QR con Expo Go para probarla:
+
+![QR para abrir Rate Repository en Expo Go](./imagenes/part10-eas-update-qr.svg)
+
+Antes de enviar el ejercicio, comprueba en un dispositivo o emulador que el QR
+abre la app y que carga los repositorios.
+
 > [!IMPORTANT]
 > La parte 11 del curso no fue realizada porque, al momento de redactar este README, no se encontraba disponible en español, únicamente en inglés.  
 > <img src="/imagenes/parte-11.png" alt="Imagen parte 11" width="250">

@@ -28,6 +28,23 @@
     "plugins": [
       "expo-router",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "88f55271-5ceb-41e4-8628-6381ed949853"
+      }
+    },
+    "owner": "godri",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/88f55271-5ceb-41e4-8628-6381ed949853"
+    }
   }
 }
