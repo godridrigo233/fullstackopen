@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fullstackopen-part11
+    runtime: node
+    plan: free
+    rootDir: part11
+    autoDeploy: false
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /health

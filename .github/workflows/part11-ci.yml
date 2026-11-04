@@ -1,0 +1,48 @@
+name: Part 11 CI
+
+on:
+  push:
+    paths:
+      - 'part11/**'
+      - 'render.yaml'
+      - '.github/workflows/part11-ci.yml'
+      - '.github/workflows/part11-verify.yml'
+  pull_request:
+    paths:
+      - 'part11/**'
+      - 'render.yaml'
+      - '.github/workflows/part11-ci.yml'
+      - '.github/workflows/part11-verify.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 1'
+
+jobs:
+  verify:
+    uses: ./.github/workflows/part11-verify.yml
+
+  deploy:
+    name: deploy
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.RENDER_DEPLOY_ENABLED == 'true' && !contains(github.event.head_commit.message, '[skip deploy]')
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Trigger Render deployment
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "::error::Set the RENDER_DEPLOY_HOOK Actions secret before enabling Render deployments."
+            exit 1
+          fi
+          curl --fail --silent --show-error --request POST "$RENDER_DEPLOY_HOOK"
+
+  production-health-check:
+    name: production health check
+    if: github.event_name == 'schedule' && vars.RENDER_APP_URL != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check production health endpoint
+        env:
+          RENDER_APP_URL: ${{ vars.RENDER_APP_URL }}
+        run: curl --fail --silent --show-error "$RENDER_APP_URL/health"

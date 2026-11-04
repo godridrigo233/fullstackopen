@@ -1,0 +1,33 @@
+name: Part 11 verification
+
+on:
+  workflow_call:
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: part11
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: part11/package-lock.json
+      - name: Workflow diagnostics
+        run: |
+          echo "Hello from the Part 11 CI workflow"
+          date -u
+          ls -la
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
