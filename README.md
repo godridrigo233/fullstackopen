@@ -107,7 +107,7 @@ Antes de enviar el ejercicio, comprueba en un dispositivo o emulador que el QR
 abre la app y que carga los repositorios.
 
 > [!IMPORTANT]
-> La parte 11 del curso no fue realizada porque, al momento de redactar este README, no se encontraba disponible en español, únicamente en inglés.  
+> La parte 11 del curso no fue realizada porque, al momento de redactar este README, no se encontraba disponible en español, únicamente en inglés.
 > <img src="/imagenes/parte-11.png" alt="Imagen parte 11" width="250">
 
 ## Parte 12: Contenedores:
@@ -117,6 +117,9 @@ En esta parte, aprenderemos como empaquetar el código en unidades de software e
 Utilizaremos contenedores para crear entornos de ejecución inmutables para nuestros proyectos de Node.js y React. Los contenedores también simplifican la inclusión de múltiples servicios en nuestros proyectos. Con su flexibilidad, exploraremos y experimentaremos con muchas herramientas populares al utilizar los contenedores.
 
 <img src="./imagenes/parte-12.png" alt="Imagen parte 12" width="250">
+
+Las soluciones de esta parte, con instrucciones para ejecutar los entornos de
+desarrollo y producción, están en [part12/README.md](./part12/README.md).
 
 ## Parte 13: Utilizando bases de datos relacionales:
 

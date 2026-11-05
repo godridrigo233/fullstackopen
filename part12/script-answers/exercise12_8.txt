@@ -1,0 +1,60 @@
+Script started on 2026-11-05 15:08:10+00:00 [COMMAND="docker exec -i todo-app-mongo-1 mongosh -u root -p example --authenticationDatabase admin the_database" <not executed on terminal>]
+show dbs
+use the_database
+show collections
+db.todos.find({}).toArray()
+db.todos.insertOne({ text: "Increase the number of tools in my tool belt", done: false })
+db.todos.findOne({ text: "Increase the number of tools in my tool belt" })
+exit
+Current Mongosh Log ID:	6aec9bdb366c11d1656138b7
+Connecting to:		mongodb://<credentials>@127.0.0.1:27017/the_database?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin&appName=mongosh+2.14.0
+Using MongoDB:		7.0.45
+Using Mongosh:		2.14.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, pseudo-anonymous usage data is collected from interactive and agentic sessions only, and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2026-11-05T14:49:38.554+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2026-11-05T14:49:39.178+00:00: Soft rlimits for open file descriptors too low
+------
+
+the_database> admin         100.00 KiB
+config         60.00 KiB
+local          72.00 KiB
+the_database   72.00 KiB
+the_database> already on db the_database
+the_database> todos
+the_database> [
+  {
+    _id: ObjectId('6aec9781f89dc8ba6e466721'),
+    text: 'Write code',
+    done: true
+  },
+  {
+    _id: ObjectId('6aec9781f89dc8ba6e466722'),
+    text: 'Learn about containers',
+    done: true
+  },
+  {
+    _id: ObjectId('6aec97f15b7f0dcc355ac6d1'),
+    text: 'through nginx',
+    done: false,
+    __v: 0
+  }
+]
+the_database> {
+  acknowledged: true,
+  insertedId: ObjectId('6aec9bdb366c11d1656138b8')
+}
+the_database> {
+  _id: ObjectId('6aec9bdb366c11d1656138b8'),
+  text: 'Increase the number of tools in my tool belt',
+  done: false
+}
+the_database>
+Script done on 2026-11-05 15:08:12+00:00 [COMMAND_EXIT_CODE="0"]
