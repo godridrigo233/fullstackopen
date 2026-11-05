@@ -1,0 +1,17 @@
+Script started on 2026-11-05 14:52:22+00:00 [COMMAND="docker run --rm -it ubuntu:22.04 bash" <not executed on terminal>]
+mkdir -p /usr/src/app
+printf "console.log(\'Hello World\')\n" > /usr/src/app/index.js
+cat /usr/src/app/index.js
+exit
+mkdir -p /usr/src/app
+printf "console.log(\'Hello World\')\n" > /usr/src/app/index.js
+cat /usr/src/app/index.js
+exit
+[?2004h]0;root@61154e29ed95: /root@61154e29ed95:/# mkdir -p /usr/src/app
+[?2004l[?2004h]0;root@61154e29ed95: /root@61154e29ed95:/# printf "console.log(\'Hello World\')\n" > /usr/src/app/indexx.js
+[?2004l[?2004h]0;root@61154e29ed95: /root@61154e29ed95:/# [Kcat /usr/src/app/index.js
+[?2004lconsole.log('Hello World')
+[?2004h]0;root@61154e29ed95: /root@61154e29ed95:/# exit
+[?2004lexit
+
+Script done on 2026-11-05 14:52:22+00:00 [COMMAND_EXIT_CODE="0"]

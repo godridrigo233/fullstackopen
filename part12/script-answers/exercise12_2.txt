@@ -1,0 +1,24 @@
+Script started on 2026-11-05 14:52:10+00:00 [COMMAND="docker run --rm -it ubuntu:22.04 bash" <not executed on terminal>]
+mkdir -p /usr/src/app
+touch /usr/src/app/index.js
+ls -l /usr/src/app
+exit
+Unable to find image 'ubuntu:22.04' locally
+22.04: Pulling from library/ubuntu
+
+[1A[2K0626d3cc316c: Pulling fs layer [1B[1A[2K0626d3cc316c: Already exists [1B
+[1A[2Kae52aad3a114: Download complete [1BDigest: sha256:076e7bf82319619f28dd0aa9c02ab34b055ad37100395b4f49a2ffba04fb5e11
+Status: Downloaded newer image for ubuntu:22.04
+mkdir -p /usr/src/app
+touch /usr/src/app/index.js
+ls -l /usr/src/app
+exit
+[?2004h]0;root@f794919e79e6: /root@f794919e79e6:/# mkdir -p /usr/src/app
+[?2004l[?2004h]0;root@f794919e79e6: /root@f794919e79e6:/# touch /usr/src/app/index.js
+[?2004l[?2004h]0;root@f794919e79e6: /root@f794919e79e6:/# [Kls -l /usr/src/app
+[?2004ltotal 0
+-rw-r--r-- 1 root root 0 Nov  5 14:52 index.js
+[?2004h]0;root@f794919e79e6: /root@f794919e79e6:/# exit
+[?2004lexit
+
+Script done on 2026-11-05 14:52:11+00:00 [COMMAND_EXIT_CODE="0"]
