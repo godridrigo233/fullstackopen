@@ -28,7 +28,13 @@ The repository workflow at `.github/workflows/part11-ci.yml` runs on pushes, pul
 2. In Render, create a deploy hook for the service. In GitHub, open **Settings → Secrets and variables → Actions** and add the hook URL as the `RENDER_DEPLOY_HOOK` secret.
 3. Add the Actions variable `RENDER_DEPLOY_ENABLED` with value `true`; add `RENDER_APP_URL` with the deployed service's base URL to enable the weekly health check.
 
-To keep `main` green, configure GitHub branch protection/rulesets for `main`: require pull requests, require the `verify` status check, and block direct pushes. These repository settings require owner access and cannot be committed as source files. Review workflow runs and enable GitHub notifications for failed actions as needed.
+### Protecting `main` and reviewing changes
+
+In the repository, open **Settings → Rules → Rulesets** and create an active branch ruleset targeting `main`. Require a pull request before merging, require at least one approval, and enable **Do not allow bypassing the above settings** so the rules also apply to administrators. Require the Part 11 `verify` check to pass and block force pushes/deletions.
+
+Open changes on a feature branch and request a review from `mattiluukkainen`. The reviewer must first be added as a collaborator with repository access. Merge only after the required approval and CI check pass. Branch rules and collaborator access are GitHub account settings; they cannot be configured by committing files to this repository.
+
+Review workflow runs and enable GitHub notifications for failed actions as needed.
 
 ## Course exercise scope
 
