@@ -129,6 +129,9 @@ Las bases de datos relacionales han experimentado desde entonces un nuevo comien
 
 <img src="./imagenes/parte-13.png" alt="Imagen parte 13" width="250">
 
+Las soluciones de esta parte, con instrucciones para PostgreSQL y migraciones,
+están en [part13/README.md](./part13/README.md).
+
 ## Certificados del curso 😁:
 
 ### Certificado Full Stack (Parte 0 - Parte 7):
