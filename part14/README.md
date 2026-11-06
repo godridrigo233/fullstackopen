@@ -48,7 +48,7 @@ npm run db:migrate
 
 El curso publica las pruebas de navegador en [fullstack-hy2020/next-js-tests](https://github.com/fullstack-hy2020/next-js-tests); el directorio `tests/` ya está incluido aquí. Configura una base de datos de prueba independiente en `.env.local`. El runner Playwright y los scripts `test:e2e` y `test:e2e:ui` ya están configurados; instala los navegadores con `npx playwright install` y ejecuta `npm run test:e2e`. El endpoint de reset elimina todos los datos y debe apuntar únicamente a esa base de pruebas.
 
-El workflow [part14-playwright.yml](../.github/workflows/part14-playwright.yml) ejecuta las mismas pruebas en GitHub Actions. Configura los secrets `DATABASE_URL` (base de pruebas), `NEXTAUTH_SECRET` y `NEXTAUTH_URL` en el repositorio de GitHub; el workflow usa `http://localhost:3000` para `NEXTAUTH_URL`.
+El workflow [part14-playwright.yml](../.github/workflows/part14-playwright.yml) ejecuta las mismas pruebas en GitHub Actions con una base PostgreSQL temporal; no requiere configurar secrets para CI. El endpoint de reset elimina todos los datos de esa base efímera.
 
 ## Comprobaciones locales
 
